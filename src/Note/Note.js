@@ -3,12 +3,14 @@ import {Link} from 'react-router-dom'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './Note.css'
+import PropTypes from 'prop-types';
 
 export default class Note extends React.Component {
     static defaultProps ={
       onDeleteNote: () => {},
     }
     static contextType = ApiContext;
+   
   
     handleClickDelete = e => {
       e.preventDefault()
@@ -64,3 +66,10 @@ export default class Note extends React.Component {
       )
     }
   }
+
+  Note.propTypes = {
+  onDeleteNote: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string,
+  modified: PropTypes.string
+}

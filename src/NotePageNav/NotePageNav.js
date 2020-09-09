@@ -1,6 +1,8 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
 import { findNote, findFolder } from '../notes-helpers'
+import PropTypes from 'prop-types';
+
 import './NotePageNav.css'
 
 export default class NotePageNav extends React.Component {
@@ -25,7 +27,7 @@ export default class NotePageNav extends React.Component {
           tag='button'
           role='link'
           onClick={() => this.props.history.goBack()}
-          className='NotePageNav__back-button'
+          className='NotePageNav__back-button NavCircleButton'
         >
           Back
         </button>
@@ -37,4 +39,14 @@ export default class NotePageNav extends React.Component {
       </div>
     )
   }
+}
+
+
+NotePageNav.propTypes = { 
+  match: PropTypes.shape({
+    params: PropTypes.object
+  }),
+  history: PropTypes.shape({
+    goBack: PropTypes.func
+  })
 }

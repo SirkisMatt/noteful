@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Note from '../Note/Note'
 import ApiContext from '../ApiContext'
+import NoteError from '../NoteError'
 import { getNotesForFolder } from '../notes-helpers'
+import PropTypes from 'prop-types';
 import './NoteListMain.css'
 
 export default class NoteListMain extends React.Component {
@@ -22,25 +24,31 @@ export default class NoteListMain extends React.Component {
         <ul>
           {notesForFolder.map(note =>
             <li key={note.id}>
+              <NoteError>
               <Note
                 id={note.id}
                 name={note.name}
                 modified={note.modified}
               />
+            </NoteError>
             </li>
           )}
         </ul>
         <div className='NoteListMain__button-container'>
-          <button
-            tag={Link}
+          <Link
             to='/add-note'
-            type='button'
-            className='NoteListMain__add-note-button'
+            className='NoteListMain__add-note-button NavCircleButton'
           >
-            Note
-          </button>
+            Add Note
+          </Link>
         </div>
       </section>
     )
   }
+}
+
+NoteListMain.propTypes = { 
+  match: PropTypes.shape({
+    params: PropTypes.object
+  })
 }

@@ -27,14 +27,12 @@ export default class NoteListNav extends React.Component {
           )}
         </ul>
         <div className='NoteListNav__button-wrapper'>
-          <button
-            tag={Link}
+          <Link
             to='/add-folder'
-            type='button'
-            className='NoteListNav__add-folder-button'
+            className='NoteListNav__add-folder-button NavCircleButton'
           >
-            Folder
-          </button>
+            Add Folder
+          </Link>
         </div>
       </div>
     )

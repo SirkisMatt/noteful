@@ -34,6 +34,7 @@ export default class NoteListMain extends React.Component {
             </li>
           )}
         </ul>
+        <NoteError>
         <div className='NoteListMain__button-container'>
           <Link
             to='/add-note'
@@ -42,6 +43,7 @@ export default class NoteListMain extends React.Component {
             Add Note
           </Link>
         </div>
+        </NoteError>
       </section>
     )
   }

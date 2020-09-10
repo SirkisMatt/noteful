@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ApiContext from '../ApiContext'
 import config from '../config'
 import PropTypes from 'prop-types';
+import ValidationError from '../ValidationError'
 import './AddFolder.css'
 
 export default class AddFolder extends Component {
@@ -14,19 +15,39 @@ export default class AddFolder extends Component {
       constructor() {
           super()
           this.state = {
-            error: false
+            error: false,
+            folder: {
+                value: "",
+                touched: false
+            }
           }
       }
-   
+
+  handleChange = e => {
+          this.setState({
+            folder: {
+                value: e.target.value,
+                touched: true
+            }
+          })
+      }
+
+      validateForm = () => {
+        const folder = this.state.folder.value.trim();
+        if (folder.length === 0) {
+          return 'Name is required';
+        }
+      }
+
     handleSubmit = e => {
         e.preventDefault()
-        const folder = {name: e.target['folder-name'].value}
+        const newFolder = {name: e.target['folder-name'].value}
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
             },
-            body: JSON.stringify(folder),
+            body: JSON.stringify(newFolder),
           })
             .then(res => {
               if (!res.ok)
@@ -34,31 +55,32 @@ export default class AddFolder extends Component {
               return res.json()
             })
             .then(response => {
-                console.log(response)
               this.context.addFolder(response)
               this.props.history.push(`/folder/${response.id}`)
             })
             .catch(error => {
-                console.log(error)
                 this.setState({error: true})
             })
     }
 
 
-    
+
     render(){
+        const formError = this.validateForm();
+
         return(
             <section className='AddFolder'>
             <h2>Create a folder</h2>
-            <form className="folder-form Noteful-form" onSubmit={this.handleSubmit}>
+            <form className="folder-form Noteful-form" onSubmit={e => this.handleSubmit(e)}>
               <div className='field'>
                 <label htmlFor='folder-name-input'>
                   Name
                 </label>
-                <input type='text' id='folder-name-input' name='folder-name' required/>
+                <input type='text' id='folder-name-input' name='folder-name' onChange={(e) => this.handleChange(e)}/>
+                {this.state.folder.touched && (<ValidationError message={formError} />)}
               </div>
               <div className='buttons'>
-                <button type='submit'>
+                <button type='submit' disabled={this.validateForm()} >
                   Add folder
                 </button>
                 {(this.state.error) ? <p className="Error-message">There was an error, please try again later.</p> : null}

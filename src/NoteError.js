@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
-class NoteError extends Component {
+export default class NoteError extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,11 +16,13 @@ class NoteError extends Component {
       render() {
         if (this.state.hasError) {      
           return (
-            <h2>Could not display note. Please try again later.</h2>
+            <h2>Oops, there was an issue displaying this content. Please try again later.</h2>
           );
         }
         return this.props.children;
       }  
 }
 
-export default NoteError;
+NoteError.propTypes = {
+    hasError: PropTypes.bool
+}

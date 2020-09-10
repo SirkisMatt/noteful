@@ -7,6 +7,7 @@ import NotePageMain from './NotePageMain/NotePageMain';
 import AddFolder from './AddFolder/AddFolder'
 import AddNote from './AddNote/AddNote'
 import ApiContext from './ApiContext';
+import NoteError from './NoteError'
 import config from './config';
 import './App.css';
 
@@ -115,13 +116,17 @@ class App extends Component {
       return (
           <ApiContext.Provider value={value}>
               <div className="App">
-                  <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                  <header className="App__header">
-                      <h1>
-                          <Link to="/">Noteful</Link>
-                      </h1>
-                  </header>
-                  <main className="App__main">{this.renderMainRoutes()}</main>
+                <NoteError>
+                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                </NoteError>
+                    <header className="App__header">
+                        <h1>
+                            <Link to="/">Noteful</Link>
+                        </h1>
+                    </header>
+                <NoteError>
+                    <main className="App__main">{this.renderMainRoutes()}</main>
+                </NoteError>
               </div>
           </ApiContext.Provider>
       );

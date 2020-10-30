@@ -49,8 +49,7 @@ export default class AddFolder extends Component {
             },
             body: JSON.stringify(newFolder),
           })
-            .then(res => {
-              console.log(res)  
+            .then(res => { 
               if (!res.ok)
               return res.json().then(e => Promise.reject(e))
               return res.json()
